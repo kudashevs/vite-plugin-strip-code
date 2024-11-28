@@ -1,0 +1,12 @@
+* text=auto
+src/* eol=lf
+test/* eol=lf
+*.md diff=markdown
+
+/.github            export-ignore
+/test               export-ignore
+/.editorconfig      export-ignore
+/.gitattributes     export-ignore
+/.gitignore         export-ignore
+/CHANGELOG.md       export-ignore
+/CONTRIBUTING.md    export-ignore

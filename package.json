@@ -1,0 +1,59 @@
+{
+  "name": "vite-plugin-strip-code",
+  "version": "1.0.0",
+  "description": "A vite plugin that strips marked blocks from any code processed by vite.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kudashevs/vite-plugin-strip-code.git"
+  },
+  "homepage": "https://github.com/kudashevs/vite-plugin-strip-code",
+  "bugs": "https://github.com/kudashevs/vite-plugin-strip-code/issues",
+  "keywords": [
+    "vite",
+    "strip code",
+    "strip blocks",
+    "strip code blocks",
+    "remove code",
+    "remove blocks",
+    "remove code blocks",
+    "vite-plugin",
+    "vite strip code",
+    "vite remove blocks"
+  ],
+  "authors": [
+    {
+      "name": "Sergey Kudashev",
+      "email": "kudashevs@gmail.com"
+    }
+  ],
+  "peerDependencies": {
+    "vite": ">=3.0.0"
+  },
+  "dependencies": {
+    "@types/node": "^22.10.1",
+    "strip-code": "^1.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "@vitest/coverage-v8": "^2.1.4",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.13.0",
+    "globals": "^15.11.0",
+    "prettier": "^2.5.1",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10",
+    "vitest": "^2.1.4"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:unit": "npm run test ./test/unit/",
+    "test:spec": "npm run test ./test/acceptance/",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint --cache .",
+    "format": "prettier --write \"**/*.+(js|json)\" --",
+    "check": "tsc"
+  }
+}
