@@ -15,10 +15,10 @@ const DEFAULT_TAG_SUFFIX = '*/';
 /**
  * @param {Object} options
  * @param {boolean} [options.ignoreNodeModules]
- * @param {Array<string|{name: string, prefix: string, suffix: string}>|undefined} [options.blocks]
+ * @param {Array<string|{start: string, end: string, prefix: string, suffix: string}>|undefined} [options.blocks]
  * @return {{name: string, transform: (code: string, id: string) => (undefined|string|{code: string, map: Object})}}
  *
- * @throws Error
+ * @throws {Error} It throws an Error when options do not match the schema.
  */
 export default function ViteStripCode(options = {}) {
   return {
@@ -27,7 +27,7 @@ export default function ViteStripCode(options = {}) {
     /**
      * @param {string} code
      * @param {string} id
-     * @returns {undefined|string|{code: string, map: Object}}
+     * @return {undefined|string|{code: string, map: Object}}
      */
     transform(code, id) {
       if (options.ignoreNodeModules !== false && id.includes('/node_modules/')) {
@@ -54,7 +54,7 @@ export default function ViteStripCode(options = {}) {
  * @param {string} content
  * @param {Object} options
  * @param {boolean} [options.ignoreNodeModules]
- * @param {Array<string|{name: string, prefix: string, suffix: string}>|undefined} [options.blocks]
+ * @param {Array<string|{start: string, end: string, prefix: string, suffix: string}>|undefined} [options.blocks]
  * @return {string}
  *
  * @throws Error
@@ -89,7 +89,7 @@ function shouldUseDefaults(options) {
 
 /**
  * @param {string} [name=DEFAULT_NAME]
- * @return {{name:string, prefix: string, suffix: string}}
+ * @return {{start: string, end: string, prefix: string, suffix: string}}
  */
 function generateDefaultBlock(name = DEFAULT_NAME) {
   return {
