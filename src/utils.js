@@ -5,7 +5,7 @@
  * @param {Array<*>|undefined} v
  * @returns {boolean}
  */
-function isNotSet(v) {
+export function isNotSet(v) {
   return v === undefined || v === null;
 }
 
@@ -13,8 +13,6 @@ function isNotSet(v) {
  * @param {Array<*>|undefined} v
  * @returns {boolean}
  */
-function isEmptyArray(v) {
+export function isEmptyArray(v) {
   return Array.isArray(v) && v.length === 0;
 }
-
-export {isNotSet, isEmptyArray};
