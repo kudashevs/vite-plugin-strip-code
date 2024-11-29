@@ -3,7 +3,7 @@
 
 /**
  * @param {Array<*>|undefined} v
- * @returns {boolean}
+ * @return {boolean}
  */
 export function isNotSet(v) {
   return v === undefined || v === null;
@@ -11,7 +11,7 @@ export function isNotSet(v) {
 
 /**
  * @param {Array<*>|undefined} v
- * @returns {boolean}
+ * @return {boolean}
  */
 export function isEmptyArray(v) {
   return Array.isArray(v) && v.length === 0;
