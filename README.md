@@ -15,15 +15,16 @@ yarn add --dev vite-plugin-strip-code
 
 ## Options
 
-`ignoreNodeModules` an boolean defines whether to process the node_modules folder.
+`ignoreNodeModules` is a boolean that defines whether to process the `node_modules` folder.
 
-`blocks` an array of blocks' representations. Each element of this array describes a unique pair of tags with name,
-prefix, and suffix. These values are represented by a string or an object with the following properties:
+`blocks` is an array of blocks' representations. Each element of this array describes a unique pair of tags with start, end,
+prefix, suffix and optional replacement. These values are represented by a string or an object with the following properties:
 ```
-start: 'dev-start',            # a string defines a name for the start tag (unique)
-end: 'dev-end',                # a string defines a name for the end tag (unique)
-prefix: '/*',                  # a string defines the beginning of a tag
-suffix: '*/',                  # a string defines the end of a tag
+start: 'dev-start'             # a string defines a name for the start tag (unique)
+end: 'dev-end'                 # a string defines a name for the end tag (unique)
+prefix: '/*'                   # a string defines the beginning of a tag
+suffix: '*/'                   # a string defines the end of a tag
+replacement: 'optional'        # a string defines a substitution for a removed block
 ```
 
 
