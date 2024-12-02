@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-strip-code",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A vite plugin that strips marked blocks from any code processed by vite.",
   "license": "MIT",
   "type": "module",
