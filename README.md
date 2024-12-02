@@ -27,6 +27,8 @@ suffix: '*/'                   # a string defines the end of a tag
 replacement: 'optional'        # a string defines a substitution for a removed block
 ```
 
+The plugin supports zero config. When no options are provided, it uses default start, end, prefix and suffix values.
+
 
 ## Usage example
 
