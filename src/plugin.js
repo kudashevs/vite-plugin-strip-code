@@ -1,6 +1,7 @@
 // @ts-check
 'use strict';
 
+// @ts-expect-error - strip-code lacks definitions
 import StripCode from 'strip-code';
 import {mapDefaults} from './mapper.js';
 
