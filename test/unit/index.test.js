@@ -96,14 +96,14 @@ describe('default test suite', () => {
     expect(plugin.transform(input, path)).toStrictEqual(expected);
   });
 
-  it('can remove a code block marked with the colon (default block representation)', () => {
+  it('can remove a code block marked with a hyphen (default block representation)', () => {
     const input = 'visible /* dev-start */ will be removed /* dev-end */';
     const expected = 'visible ';
 
     expect(plugin.transform(input)).toStrictEqual(expected);
   });
 
-  it('can use special characters in names', () => {
+  it('can use special characters in pair names', () => {
     const plugin = VitePlugin({
       blocks: [
         {
