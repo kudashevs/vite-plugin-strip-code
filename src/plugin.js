@@ -2,7 +2,6 @@
 'use strict';
 
 import StripCode from 'strip-code';
-import {isEmptyArray, isNotSet} from './utils.js';
 
 const PLUGIN_NAME = 'vite-plugin-remove-blocks';
 
@@ -88,16 +87,17 @@ function shouldUseDefaults(options) {
 }
 
 /**
- * @param {string} [name=DEFAULT_NAME]
- * @return {{start: string, end: string, prefix: string, suffix: string}}
+ * @param {Array<*>|undefined} v
+ * @return {boolean}
  */
-function generateDefaultBlock(name = DEFAULT_NAME) {
-  return {
-    start: `${name}${DEFAULT_SEPARATOR}start`,
-    end: `${name}${DEFAULT_SEPARATOR}end`,
-    prefix: DEFAULT_TAG_PREFIX,
-    suffix: DEFAULT_TAG_SUFFIX,
-  };
+function isNotSet(v) {
+  return v === undefined || v === null;
 }
 
-
+/**
+ * @param {Array<*>|undefined} v
+ * @return {boolean}
+ */
+function isEmptyArray(v) {
+  return Array.isArray(v) && v.length === 0;
+}
