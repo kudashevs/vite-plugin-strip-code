@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.1](https://github.com/kudashevs/vite-plugin-strip-code/compare/v2.0.0...v2.0.1) - 2026-08-19
+
+- Fix mutating options
+- Extract defaults mapper
+- Inline util helpers
+- Update README.md
+- Some improvements
+
 ## [2.0.0](https://github.com/kudashevs/vite-plugin-strip-code/compare/v1.1.0...v2.0.0) - 2026-08-18
 
 - Drop support for Node 18, 20, 21, 23
