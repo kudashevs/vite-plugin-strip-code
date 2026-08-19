@@ -28,8 +28,11 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
+      - name: Install dependencies
+        run: npm ci
+
       - name: Install vite ${{ matrix.vite-version }}
-        run: npm i vite@${{ matrix.vite-version }}
+        run: npm i vite@${{ matrix.vite-version }} --no-save
 
       - name: Run tests for vite ${{ matrix.vite-version }}
-        run: export NODE_OPTIONS=--openssl-legacy-provider && npm test
+        run: npm test
