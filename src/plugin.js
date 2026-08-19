@@ -76,11 +76,11 @@ function strip(content, options = {}) {
     return content;
   }
 
-  if (shouldUseDefaults(options)) {
-    options.blocks = [mapDefaults()];
-  }
+  const populatedOptions = (shouldUseDefaults(options))
+    ? {...options, blocks: [mapDefaults()]}
+    : options;
 
-  return StripCode(content, options);
+  return StripCode(content, populatedOptions);
 }
 
 /**
