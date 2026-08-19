@@ -83,7 +83,7 @@ function shouldSkipProcessing(mode) {
  * @param {Array<*>|undefined} [options.blocks]
  */
 function shouldUseDefaults(options) {
-  return isNotSet(options.blocks) || isEmptyArray(options.blocks);
+  return isNotSet(options?.blocks) || isEmptyArray(options?.blocks);
 }
 
 /**
