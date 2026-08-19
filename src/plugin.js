@@ -5,13 +5,29 @@
 import StripCode from 'strip-code';
 import {mapDefaults} from './mapper.js';
 
+/**
+ * @typedef {Object} BlockWithName
+ * @property {string} name - a name for the pair of tags.
+ * @property {string} [separator] - a separator between name and position.
+ * @property {string} [prefix] - a beginning of a tag.
+ * @property {string} [suffix] - an end of a tag.
+ * @property {string} [replacement] - a substitution text.
+ *
+ * @typedef {Object} BlockWithStartEnd
+ * @property {string} start - a unique name for the start tag.
+ * @property {string} end - a unique name for the end tag.
+ * @property {string} [prefix] - a beginning of a tag.
+ * @property {string} [suffix] - a end of a tag.
+ * @property {string} [replacement] - a substitution text.
+ */
+
 const PLUGIN_NAME = 'vite-plugin-remove-blocks';
 const EXCLUDE_MODES = ['development'];
 
 /**
  * @param {Object} options
  * @param {boolean} [options.ignoreNodeModules]
- * @param {Array<string|{start: string, end: string, prefix: string, suffix: string}>|undefined} [options.blocks]
+ * @param {Array<string|BlockWithName|BlockWithStartEnd>|undefined} [options.blocks]
  * @return {{name: string, transform: (code: string, id: string) => (undefined|string|{code: string, map: Object})}}
  *
  * @throws {Error} It throws an Error when options do not match the schema.
@@ -50,7 +66,7 @@ export default function ViteStripCode(options = {}) {
  * @param {string} content
  * @param {Object} options
  * @param {boolean} [options.ignoreNodeModules]
- * @param {Array<string|{start: string, end: string, prefix: string, suffix: string}>|undefined} [options.blocks]
+ * @param {Array<string|BlockWithName|BlockWithStartEnd>|undefined} [options.blocks]
  * @return {string}
  *
  * @throws Error
