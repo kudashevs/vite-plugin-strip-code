@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [2.0.1](https://github.com/kudashevs/vite-plugin-strip-code/compare/v2.0.0...v2.0.1) - 2026-08-19
 
-- Fix mutating options
+- Fix mutation of options
 - Extract defaults mapper
 - Inline util helpers
 - Update README.md
