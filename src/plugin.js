@@ -2,14 +2,10 @@
 'use strict';
 
 import StripCode from 'strip-code';
+import {mapDefaults} from './mapper.js';
 
 const PLUGIN_NAME = 'vite-plugin-remove-blocks';
-
 const EXCLUDE_MODES = ['development'];
-const DEFAULT_NAME = 'dev';
-const DEFAULT_SEPARATOR = '-';
-const DEFAULT_TAG_PREFIX = '/*';
-const DEFAULT_TAG_SUFFIX = '*/';
 
 /**
  * @param {Object} options
@@ -64,7 +60,7 @@ function strip(content, options = {}) {
   }
 
   if (shouldUseDefaults(options)) {
-    options.blocks = [generateDefaultBlock()];
+    options.blocks = [mapDefaults()];
   }
 
   return StripCode(content, options);
