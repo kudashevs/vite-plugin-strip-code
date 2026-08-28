@@ -23,6 +23,7 @@ import {mapDefaults} from './mapper.js';
 
 const PLUGIN_NAME = 'vite-plugin-remove-blocks';
 const EXCLUDE_MODES = ['development'];
+const FALLBACK_MODE = 'production';
 
 /**
  * @param {Object} options
@@ -55,6 +56,7 @@ export default function ViteStripCode(options = {}) {
     transform(code, id) {
       if (
         shouldSkipNodeModules(options, id)
+        || shouldSkipMode(currentMode)
       ) {
         return;
       }
@@ -73,6 +75,16 @@ export default function ViteStripCode(options = {}) {
       };
     },
   };
+}
+
+/**
+ * @param {string|undefined} mode
+ * @returns {boolean}
+ */
+function shouldSkipMode(mode) {
+  const evaluated = mode ?? import.meta.env?.MODE ?? FALLBACK_MODE;
+
+  return EXCLUDE_MODES.includes(evaluated);
 }
 
 /**
@@ -96,23 +108,11 @@ function shouldSkipNodeModules(options, id) {
  * @throws Error
  */
 function strip(content, options = {}) {
-  if (shouldSkipProcessing(import.meta.env?.MODE ?? process.env.NODE_ENV)) {
-    return content;
-  }
-
   const populatedOptions = (shouldUseDefaults(options))
     ? {...options, blocks: [mapDefaults()]}
     : options;
 
   return StripCode(content, populatedOptions);
-}
-
-/**
- * @param {string} mode
- * @return {boolean}
- */
-function shouldSkipProcessing(mode) {
-  return EXCLUDE_MODES.includes(mode);
 }
 
 /**
