@@ -28,6 +28,7 @@ const FALLBACK_MODE = 'production';
 /**
  * @param {Object} options
  * @param {boolean} [options.ignoreNodeModules]
+ * @param {Array<string>|undefined} [options.skipModes]
  * @param {Array<string|BlockWithName|BlockWithStartEnd>|undefined} [options.blocks]
  * @return {{name: string, transform: (code: string, id: string) => (undefined|string|{code: string, map: Object})}}
  *
@@ -54,9 +55,8 @@ export default function ViteStripCode(options = {}) {
      * @return {undefined|string|{code: string, map: Object}}
      */
     transform(code, id) {
-      if (
-        shouldSkipNodeModules(options, id)
-        || shouldSkipMode(currentMode)
+      if (shouldSkipNodeModules(options, id)
+        || shouldSkipModes(options, currentMode)
       ) {
         return;
       }
@@ -78,13 +78,17 @@ export default function ViteStripCode(options = {}) {
 }
 
 /**
- * @param {string|undefined} mode
+ * @param {Object} options
+ * @param {Array<string>} [options.skipModes]
+ * @param {string|undefined} currentMode
  * @returns {boolean}
  */
-function shouldSkipMode(mode) {
-  const eventualMode = mode ?? import.meta.env?.MODE ?? FALLBACK_MODE;
+function shouldSkipModes(options, currentMode) {
+  const eventualMode = currentMode ?? import.meta.env?.MODE ?? FALLBACK_MODE;
+  const modesFromOptions = options.skipModes ?? [];
+  const ignoreModes = [...EXCLUDE_MODES, ...modesFromOptions];
 
-  return EXCLUDE_MODES.includes(eventualMode);
+  return ignoreModes.includes(eventualMode);
 }
 
 /**

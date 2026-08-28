@@ -23,8 +23,12 @@ describe('default test suite', () => {
     expect(plugin.transform(input)).toStrictEqual(expected);
   });
 
-  it('can skip development environment when set with a vite option', () => {
-    vi.stubEnv('MODE', 'development');
+  it('can skip production environment when an option is provided', () => {
+    vi.stubEnv('MODE', 'production');
+
+    const plugin = VitePlugin({
+      skipModes: ['production'],
+    });
 
     const input = '/* dev-start */ any /* dev-end */';
     const expected = '/* dev-start */ any /* dev-end */';
