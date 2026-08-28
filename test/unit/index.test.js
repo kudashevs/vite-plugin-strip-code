@@ -28,7 +28,7 @@ describe('default test suite', () => {
     import.meta.env.MODE = originalMode;
   });
 
-  it('can skip development environment set with a vite option', () => {
+  it('can skip development environment when set with a vite option', () => {
     import.meta.env.MODE = 'development';
 
     const input = '/* dev-start */ any /* dev-end */';
