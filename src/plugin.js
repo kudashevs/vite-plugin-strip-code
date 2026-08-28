@@ -53,7 +53,9 @@ export default function ViteStripCode(options = {}) {
      * @return {undefined|string|{code: string, map: Object}}
      */
     transform(code, id) {
-      if (options.ignoreNodeModules !== false && id.includes('/node_modules/')) {
+      if (
+        shouldSkipNodeModules(options, id)
+      ) {
         return;
       }
 
@@ -71,6 +73,17 @@ export default function ViteStripCode(options = {}) {
       };
     },
   };
+}
+
+/**
+ * @param {Object} options
+ * @param {boolean} [options.ignoreNodeModules]
+ * @param {string} id
+ *
+ * @returns {boolean}
+ */
+function shouldSkipNodeModules(options, id) {
+  return options.ignoreNodeModules !== false && id.includes('/node_modules/');
 }
 
 /**
