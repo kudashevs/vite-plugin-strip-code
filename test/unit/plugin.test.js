@@ -1,53 +1,44 @@
-import {describe, expect, it} from 'vitest';
+import {describe, expect, it, vi} from 'vitest';
 import VitePlugin from '../helpers/adapter.js';
 
 describe('default test suite', () => {
-  const originalMode = import.meta.env.MODE;
   const plugin = VitePlugin();
 
   it.each([
     ['production', '/* dev-start */ any /* dev-end */', ''],
     ['test', '/* dev-start */ any /* dev-end */', ''],
-  ])('can proceed in %s environment', (environment, input, expected) => {
-    import.meta.env.MODE = environment;
+  ])('can proceed in %s environment', (mode, input, expected) => {
+    vi.stubEnv('MODE', mode);
 
-    expect(import.meta.env.MODE).toStrictEqual(environment);
+    expect(import.meta.env.MODE).toStrictEqual(mode);
     expect(plugin.transform(input)).toStrictEqual(expected);
-
-    import.meta.env.MODE = originalMode;
   });
 
   it.each([
     ['development', '/* dev-start */ any /* dev-end */', '/* dev-start */ any /* dev-end */'],
-  ])('can skip in %s environment', (environment, input, expected) => {
-    import.meta.env.MODE = environment;
+  ])('can skip in %s environment', (mode, input, expected) => {
+    vi.stubEnv('MODE', mode);
 
-    expect(import.meta.env.MODE).toStrictEqual(environment);
+    expect(import.meta.env.MODE).toStrictEqual(mode);
     expect(plugin.transform(input)).toStrictEqual(expected);
-
-    import.meta.env.MODE = originalMode;
   });
 
   it('can skip development environment when set with a vite option', () => {
-    import.meta.env.MODE = 'development';
+    vi.stubEnv('MODE', 'development');
 
     const input = '/* dev-start */ any /* dev-end */';
     const expected = '/* dev-start */ any /* dev-end */';
 
     expect(plugin.transform(input)).toStrictEqual(expected);
-
-    import.meta.env.MODE = originalMode;
   });
 
   it('can handle an empty mode option', () => {
-    import.meta.env.MODE = '';
+    vi.stubEnv('MODE', '');
 
     const input = '/* dev-start */ any /* dev-end */';
     const expected = '';
 
     expect(plugin.transform(input)).toStrictEqual(expected);
-
-    import.meta.env.MODE = originalMode;
   });
 
   it('can handle an empty blocks options', () => {
