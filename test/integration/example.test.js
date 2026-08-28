@@ -7,7 +7,7 @@ import path from "node:path";
 describe('README example test suite', () => {
   const fixture = path.resolve(
     __dirname,
-    '../fixtures/acceptance.js',
+    '../fixtures/integration.js',
   );
 
   const expected = `function makeFoo(bar, baz) {
@@ -51,8 +51,7 @@ describe('README example test suite', () => {
       item => item.type === 'chunk'
     )?.code;
 
-    expect(converter(output)).toContain('console.log')
-
+    expect(converter(output)).toContain('console.log');
   });
 
   it('can process an acceptance fixture', async () => {
