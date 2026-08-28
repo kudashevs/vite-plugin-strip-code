@@ -13,9 +13,18 @@ yarn add --dev vite-plugin-strip-code
 ```
 
 
+## Modes
+
+By default, the plugin strips blocks in all modes except the `development`. Use the `skipModes` option to disable stripping
+blocks in specific modes.
+
+
 ## Options
 
-`ignoreNodeModules` is a boolean that defines whether to process the `node_modules` folder.
+`skipNodeModules` is a boolean that defines whether to skip processing of the `node_modules` folder. The `ignoreNodeModules`
+option is deprecated and should no longer be u'sed.
+
+`skipModes` is an array of modes where to disable blocks stripping.
 
 `blocks` is an array of blocks' representations. Each element of this array describes a unique pair of tags. Pairs can
 be defined as a string or an object with different properties. For more information about `blocks` values and how to use
