@@ -33,8 +33,19 @@ const EXCLUDE_MODES = ['development'];
  * @throws {Error} It throws an Error when options do not match the schema.
  */
 export default function ViteStripCode(options = {}) {
+  /** @type {string|undefined} */
+  let currentMode;
+
   return {
     name: PLUGIN_NAME,
+
+    /**
+     * @param {Object} config
+     * @param {string} [config.mode]
+     */
+    configResolved(config) {
+      currentMode = config?.mode;
+    },
 
     /**
      * @param {string} code
