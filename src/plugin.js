@@ -82,9 +82,9 @@ export default function ViteStripCode(options = {}) {
  * @returns {boolean}
  */
 function shouldSkipMode(mode) {
-  const evaluated = mode ?? import.meta.env?.MODE ?? FALLBACK_MODE;
+  const eventualMode = mode ?? import.meta.env?.MODE ?? FALLBACK_MODE;
 
-  return EXCLUDE_MODES.includes(evaluated);
+  return EXCLUDE_MODES.includes(eventualMode);
 }
 
 /**
