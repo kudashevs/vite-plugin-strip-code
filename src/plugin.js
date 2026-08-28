@@ -58,7 +58,8 @@ export default function ViteStripCode(options = {}) {
     transform(code, id) {
       processDeprecatedIgnoreNodeNodules(options);
 
-      if (shouldSkipNodeModules(options, id)
+      if (
+        shouldSkipNodeModules(options, id)
         || shouldSkipModes(options, currentMode)
       ) {
         return;
@@ -131,9 +132,7 @@ function shouldSkipNodeModules(options, id) {
  * @throws Error
  */
 function strip(content, options = {}) {
-  const populatedOptions = (shouldUseDefaults(options))
-    ? {...options, blocks: [mapDefaults()]}
-    : options;
+  const populatedOptions = (shouldUseDefaults(options)) ? {...options, blocks: [mapDefaults()]} : options;
 
   return StripCode(content, populatedOptions);
 }
