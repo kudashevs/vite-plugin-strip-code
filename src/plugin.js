@@ -27,7 +27,8 @@ const FALLBACK_MODE = 'production';
 
 /**
  * @param {Object} options
- * @param {boolean} [options.ignoreNodeModules]
+ * @param {boolean} [options.ignoreNodeModules] (deprecated since v2.1.0)
+ * @param {boolean} [options.skipNodeModules]
  * @param {Array<string>|undefined} [options.skipModes]
  * @param {Array<string|BlockWithName|BlockWithStartEnd>|undefined} [options.blocks]
  * @return {{name: string, transform: (code: string, id: string) => (undefined|string|{code: string, map: Object})}}
@@ -55,6 +56,8 @@ export default function ViteStripCode(options = {}) {
      * @return {undefined|string|{code: string, map: Object}}
      */
     transform(code, id) {
+      processDeprecatedIgnoreNodeNodules(options);
+
       if (shouldSkipNodeModules(options, id)
         || shouldSkipModes(options, currentMode)
       ) {
@@ -79,6 +82,21 @@ export default function ViteStripCode(options = {}) {
 
 /**
  * @param {Object} options
+ * @param {boolean} [options.ignoreNodeModules] (deprecated since v2.1.0)
+ * @param {boolean} [options.skipNodeModules]
+ */
+function processDeprecatedIgnoreNodeNodules(options) {
+  if (options?.ignoreNodeModules !== undefined) {
+    console.warn('Warning: ignoreNodeModules is deprecated. Please use skipNodeModules instead.');
+
+    if (options?.skipNodeModules === undefined) {
+      options.skipNodeModules = options.ignoreNodeModules;
+    }
+  }
+}
+
+/**
+ * @param {Object} options
  * @param {Array<string>} [options.skipModes]
  * @param {string|undefined} currentMode
  * @returns {boolean}
@@ -93,13 +111,14 @@ function shouldSkipModes(options, currentMode) {
 
 /**
  * @param {Object} options
- * @param {boolean} [options.ignoreNodeModules]
+ * @param {boolean} [options.ignoreNodeModules] (deprecated since v2.1.0)
+ * @param {boolean} [options.skipNodeModules]
  * @param {string} id
  *
  * @returns {boolean}
  */
 function shouldSkipNodeModules(options, id) {
-  return options.ignoreNodeModules !== false && id.includes('/node_modules/');
+  return options.skipNodeModules !== false && id.includes('/node_modules/');
 }
 
 /**

@@ -81,7 +81,7 @@ describe('default test suite', () => {
 
   it('can process files from node_modules with the specific option', () => {
     const plugin = VitePlugin({
-      ignoreNodeModules: false,
+      skipNodeModules: false,
     });
 
     const path = '/node_modules/axios/index.js';
