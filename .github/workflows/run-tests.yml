@@ -15,7 +15,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         node-version: [22.x, 24.x, 26.x]
-        vite-version: [6, 7]
+        vite-version: [6, 7, 8]
 
     steps:
       - name: Checkout code

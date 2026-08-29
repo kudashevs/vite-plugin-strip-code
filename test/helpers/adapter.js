@@ -11,7 +11,7 @@ export default function VitePluginAdapter(options = {}) {
   return {
     name: adaptee.name,
     transform(content, id = filePath) {
-      const result = adaptee.transform(content, id);
+      const result = adaptee.transform.handler(content, id);
 
       // the result.code is undefined when transformation is skipped
       return result?.code ?? content;

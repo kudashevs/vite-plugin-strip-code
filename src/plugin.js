@@ -50,33 +50,40 @@ export default function ViteStripCode(options = {}) {
       currentMode = config?.mode;
     },
 
-    /**
-     * @param {string} code
-     * @param {string} id
-     * @return {undefined|string|{code: string, map: Object}}
-     */
-    transform(code, id) {
-      processDeprecatedIgnoreNodeNodules(options);
+    transform: {
+      // @ts-ignore
+      filter: {
+        id: /.*/,
+      },
 
-      if (
-        shouldSkipNodeModules(options, id)
-        || shouldSkipModes(options, currentMode)
-      ) {
-        return;
+      /**
+       * @param {string} code
+       * @param {string} id
+       * @return {undefined|string|{code: string, map: Object}}
+       */
+      handler(code, id) {
+        processDeprecatedIgnoreNodeNodules(options);
+
+        if (
+          shouldSkipNodeModules(options, id)
+          || shouldSkipModes(options, currentMode)
+        ) {
+          return;
+        }
+
+        let modified = '';
+
+        try {
+          modified = strip(code, options);
+        } catch (e) {
+          throw e;
+        }
+
+        return {
+          code: modified,
+          map: {mappings: ''}
+        };
       }
-
-      let modified = '';
-
-      try {
-        modified = strip(code, options);
-      } catch (e) {
-        throw e;
-      }
-
-      return {
-        code: modified,
-        map: {mappings: ''}
-      };
     },
   };
 }
