@@ -1,4 +1,4 @@
-import {build} from 'vite';
+import {createServer, version as viteVersion} from 'vite';
 import {describe, expect, it} from 'vitest';
 import converter from '../helpers/converter.js';
 import ViteStripCode from "../../src/index.js";
@@ -11,11 +11,12 @@ describe('README example test suite', () => {
   );
 
   const expected = `function makeFoo(bar, baz) {
-  return new Foo(bar, baz);
+    // This code will remain
+    return new Foo(bar, baz);
 }\n`;
 
   it('can skip an acceptance fixture in development', async () => {
-    const result = await build({
+    const server = await createServer({
       configFile: false,
       mode: "development",
       plugins: [
@@ -40,23 +41,32 @@ describe('README example test suite', () => {
       build: {
         write: false,
         minify: false,
-        rollupOptions: {
-          input: fixture,
-          treeshake: false,
-        }
+        ...(viteVersion >= 8
+            ? {
+              rolldownOptions: {
+                input: fixture,
+                treeshake: false,
+              },
+            }
+            : {
+              rollupOptions: {
+                input: fixture,
+                treeshake: false,
+              },
+            }
+        ),
       }
     });
 
-    const output = result.output.find(
-      item => item.type === 'chunk'
-    )?.code;
+    const output = (await server.transformRequest(fixture))?.code;
 
     expect(converter(output)).toContain('console.log');
   });
 
   it('can process an acceptance fixture', async () => {
-    const result = await build({
+    const server = await createServer({
       configFile: false,
+      mode: 'production',
       plugins: [
         ViteStripCode({
           blocks: [
@@ -79,16 +89,24 @@ describe('README example test suite', () => {
       build: {
         write: false,
         minify: false,
-        rollupOptions: {
-          input: fixture,
-          treeshake: false,
-        }
+        ...(viteVersion >= 8
+            ? {
+              rolldownOptions: {
+                input: fixture,
+                treeshake: false,
+              },
+            }
+            : {
+              rollupOptions: {
+                input: fixture,
+                treeshake: false,
+              },
+            }
+        ),
       }
     });
 
-    const output = result.output.find(
-      item => item.type === 'chunk'
-    )?.code;
+    const output = (await server.transformRequest(fixture))?.code;
 
     expect(converter(output)).toBe(converter(expected));
   });
