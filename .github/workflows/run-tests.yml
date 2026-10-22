@@ -16,6 +16,13 @@ jobs:
         os: [ubuntu-latest]
         node-version: [22.x, 24.x, 26.x]
         vite-version: [6, 7, 8]
+        include:
+          - vite-version: 6
+            vitest-version: 4
+          - vite-version: 7
+            vitest-version: 5
+          - vite-version: 8
+            vitest-version: 5
 
     steps:
       - name: Checkout code
@@ -32,7 +39,7 @@ jobs:
         run: npm ci
 
       - name: Install vite ${{ matrix.vite-version }}
-        run: npm i vite@${{ matrix.vite-version }} --no-save
+        run: npm i vite@${{ matrix.vite-version }} vitest@${{ matrix.vitest-version}} --no-save --legacy-peer-deps
 
       - name: Upload npm logs on failure
         if: failure()
